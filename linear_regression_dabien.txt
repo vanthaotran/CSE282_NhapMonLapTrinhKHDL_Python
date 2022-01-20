@@ -1,0 +1,28 @@
+# all vs quality
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+
+# doc file csv
+df = pd.read_csv('winequality-red (1).csv',sep=";")
+# y = ax+b
+x = df.drop("quality",axis=1)
+y = df['quality'].values
+# chuan hoa du lieu cua x
+x = x.apply(lambda x : (x - np.mean(x)) / (np.max(x)-np.min(x)) )
+print(x)
+print(y)
+# tao mo hinh hoi quy
+clf = linear_model.LinearRegression()
+clf.fit(x,y)
+# thong tin hoi quy
+
+# print("he so hoi quy", clf.coef_) -> can phai xu ly!
+dt = {
+    "Name" : x,
+    "He so hoi quy" : clf.coef_
+}
+print(pd.DataFrame(dt).sort_values(by="He so hoi quy") )
+print("sai so hoi quy", clf.intercept_)
+print("sai so mo hinh", clf.score(x,y))

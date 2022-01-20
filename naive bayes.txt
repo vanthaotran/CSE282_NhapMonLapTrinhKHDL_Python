@@ -1,0 +1,20 @@
+# phân lớp naive bayes
+import pandas as pd
+# from sklearn import dataset
+from sklearn.naive_bayes import GaussianNB
+from sklearn import metrics
+# xd dữ liệu
+wine = pd.read_csv("winequality-red.csv",sep=";")
+print(wine)
+x = wine.drop("quality",axis=1)
+y = wine["quality"].values
+# Mô hình
+model =  GaussianNB()
+model.fit(x,y)
+print(model)
+#ung dung
+kq = model.predict(x)
+# hie thi kq danh giá
+print(kq)
+print(metrics.confusion_matrix(y,kq))
+print(metrics.classification_report(y,kq))

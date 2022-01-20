@@ -1,0 +1,15 @@
+# k-means
+from google.colab import files
+files.upload() 
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn import metrics
+wine = pd.read_csv("tieu_duong.csv") # đọc file csv
+print(wine) # in vừa đọc
+x = wine.drop("Class",axis=1)
+y = wine['Class'].values  # lấy ra 8 thuộc tính cần dùng
+model = KMeans(n=4).fi_clusterst(x) # train con model này!
+print(model)
+kq = model.predict(x) # dự đoán cái con model này trên tập DL x
+print(kq)
+print(metrics.confusion_matrix(y,kq)) # ma trận tương quan

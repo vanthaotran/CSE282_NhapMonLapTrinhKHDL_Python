@@ -1,0 +1,41 @@
+# k-nearest neighbor KNN
+from google.colab import files
+files.upload()
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics, tree
+import matplotlib.pyplot as plt
+import numpy as np
+import sklearn
+a = pd.read_csv("Heart.csv") # đọc file
+print(a)
+# print(a.std()) # độ lệch chuẩn
+X = a.drop("Class", axis=1) # 9 thuộc tính trong file, drop đi cột Class (gán nhãn trước đó!)
+Y = a["Class"].values
+X_test = sklearn.utils.shuffle(X) # xáo trộn cái tập DL x -> lát nữa dự đoán xem như nào?
+model1 = KNeighborsClassifier() # tạo mô hình KNN
+model1.fit(X, Y) # cho mô hình học cái dữ liệu X,Y mà mình vừa lôi ra
+# du doan
+result1 = model1.predict(X_test)
+print("KNN: ")
+print(result1)
+print("Ma trận tương quan")
+print(metrics.confusion_matrix(Y, result1)) # ma trận tương quan giữa cái Y và kết quả vừa train cho mô hình vừa tạo
+print(metrics.classification_report(Y, result1)) # báo cáo thống kê 
+
+# các bước làm:
+# - xử lý dữ liệu: đọc file csv, lấy x, lấy y (x: những thuộc tính của cái chủ thể) (y cái cần so sánh với kết quả mà sắp tới
+# training cái mô hình)
+# - tạo mô hình theo yêu cầu
+# - train mô hình
+# - dự đoán mô hình đó trên 1 tập dữ liệu nào đó ***
+# - đưa ra ma trận tương quan giữa cái cột cuối cùng(đã có trong file) vs kết quả *** (@@@)
+# - in ra báo cáo thống kê về (@@@)
+
+# vẽ
+a_sorted = a.sort_values(by = "RestBP")
+plt.plot(a_sorted["RestBP"], a_sorted["Chol"], color = "blue")
+plt.title("BIỂU ĐỒ SO SÁNH SỰ TƯƠNG QUAN ")
+plt.xlabel("RestBP")
+plt.ylabel("Chol")
+plt.show()

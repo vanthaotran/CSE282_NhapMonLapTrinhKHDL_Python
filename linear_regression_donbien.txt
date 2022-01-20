@@ -1,0 +1,31 @@
+# hoi quy don bien, alcohol vs quality
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import pandas as pd
+import io
+# doc file csv
+df = pd.read_csv('winequality-red (1).csv', sep=";")
+df.head
+print(df)
+# nhap output input, y = ax + b
+x = df.loc[:,['alcohol']].values
+y = df.loc[:,['quality']].values
+# tao mo hinh hoi quy
+clf = linear_model.LinearRegression()
+clf.fit(x,y)
+# thong tin ve hoi quy
+print("he so hoi quy", clf.coef_)
+print("sai so hoi quy", clf.intercept_)
+print("sai so mo hinh", clf.score(x,y))
+# pt duong hoi quy
+print(f"Phương trình hồi quy: [quality]={clf.coef_}*[alcohol]+{clf.intercept_}")
+plt.plot(x, clf.predict(x))
+plt.scatter(x,y,c='r') # show diem
+plt.show()
+# qua trinh test -> chay mo hinh du bao
+while True:
+  x1 = float(input("alcohol: "))
+  if x1 < 0:
+    break
+  print('quality: ', x1, ":", clf.predict([[x1]]))

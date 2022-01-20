@@ -1,0 +1,18 @@
+# tree_iris
+# https://www.datacamp.com/community/tutorials/decision-tree-classification-python
+from google.colab import files
+files.upload()
+
+import pandas as pd
+from sklearn import tree
+from sklearn import metrics
+iris = pd.read_csv("Iris.csv") # đọc file csv
+x = iris.drop("class",axis=1)  # lấy 4 thuộc tính trong file (drop đi cột Class!)
+y = iris["class"].values # lấy ra cột y trong file
+model = tree.DecisionTreeClassifier() # tạo model mô hình
+model.fit(x,y) # train dữ liệu cho mô hình vừa tạo
+print(model)
+kq = model.predict(x) # gán nhãn cho cái dự đoán của con model mình vừa train
+print(kq)
+print(metrics.confusion_matrix(y,kq)) # ma trận tương quan giữa cái y (Class) và kq (Dl mà máy vừa được học bởi mô hình)
+print(metrics.classification_report(y,kq)) # in ra báo cáo dữ liệu
